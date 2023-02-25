@@ -7,7 +7,7 @@ export default function Card({ card, onCardClick }) {
   }
 
   return (
-    <li className="gallery__card" key={card._id}>
+    <li className="gallery__card">
       <img className="gallery__picture" src={card.link} onClick={handleClick} alt={card.name} />
       <div className="gallery__card-container">
         <h2 className="gallery__caption">{card.name}</h2>

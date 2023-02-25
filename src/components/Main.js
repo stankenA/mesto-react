@@ -21,7 +21,7 @@ export default function Main({ handleEditAvatarClick, handleEditProfileClick, ha
       .then((cardsData) => {
         setCards(cardsData)
       })
-  });
+  }, []);
 
   return (
     <main className="content">
@@ -39,7 +39,7 @@ export default function Main({ handleEditAvatarClick, handleEditProfileClick, ha
       <section className="gallery">
         <ul className="gallery__grid">
           {cards.map((card, i) => (
-            <Card card={card} onCardClick={handleCardClick} />
+            <Card card={card} key={card._id} onCardClick={handleCardClick} />
           ))}
         </ul>
       </section>
