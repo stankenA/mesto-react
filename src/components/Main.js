@@ -3,7 +3,7 @@ import { UserContext } from '../contexts/CurrentUserContext.js';
 import { api } from '../utilis/Api.js';
 import Card from './Card.js';
 
-export default function Main({ cards, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleCardLike }) {
+export default function Main({ cards, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleCardLike, handleCardDelete }) {
 
   const currentUser = useContext(UserContext);
 
@@ -23,7 +23,7 @@ export default function Main({ cards, handleEditAvatarClick, handleEditProfileCl
       <section className="gallery">
         <ul className="gallery__grid">
           {cards.map((card, i) => (
-            <Card card={card} key={card._id} onCardClick={handleCardClick} onCardLike={handleCardLike} />
+            <Card card={card} key={card._id} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
           ))}
         </ul>
       </section>
