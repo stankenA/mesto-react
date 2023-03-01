@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../contexts/CurrentUserContext.js';
 
-export default function Card({ card, onCardClick }) {
+export default function Card({ card, onCardClick, onCardLike }) {
 
   const currentUser = useContext(UserContext);
 
@@ -19,13 +19,17 @@ export default function Card({ card, onCardClick }) {
     onCardClick(card);
   }
 
+  function handleLike() {
+    onCardLike(card);
+  }
+
   return (
     <li className="gallery__card">
       <img className="gallery__picture" src={card.link} onClick={handleClick} alt={card.name} />
       <div className="gallery__card-container">
         <h2 className="gallery__caption">{card.name}</h2>
         <div className="gallery__like-container">
-          <button type="button" className={cardLikeButtonClassName} aria-label="Кнопка лайка"></button>
+          <button type="button" className={cardLikeButtonClassName} aria-label="Кнопка лайка" onClick={handleLike}></button>
           <span className="gallery__like-counter">{card.likes.length}</span>
         </div>
         {isOwn && <button className="gallery__delete-button"></button>}

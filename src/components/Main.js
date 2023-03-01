@@ -3,19 +3,9 @@ import { UserContext } from '../contexts/CurrentUserContext.js';
 import { api } from '../utilis/Api.js';
 import Card from './Card.js';
 
-export default function Main({ handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick }) {
+export default function Main({ cards, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleCardLike }) {
 
   const currentUser = useContext(UserContext);
-
-  const [cards, setCards] = useState([]);
-
-
-  useEffect(() => {
-    api.getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData)
-      });
-  }, []);
 
   return (
     <main className="content">
@@ -33,7 +23,7 @@ export default function Main({ handleEditAvatarClick, handleEditProfileClick, ha
       <section className="gallery">
         <ul className="gallery__grid">
           {cards.map((card, i) => (
-            <Card card={card} key={card._id} onCardClick={handleCardClick} />
+            <Card card={card} key={card._id} onCardClick={handleCardClick} onCardLike={handleCardLike} />
           ))}
         </ul>
       </section>

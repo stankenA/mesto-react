@@ -57,18 +57,18 @@ class Api {
     })
   }
 
-  likeCard(id) {
-    return this._request(`${this._url}/cards/${id}/likes`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-  }
-
-  unlikeCard(id) {
-    return this._request(`${this._url}/cards/${id}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
+  changeLikeStatus(id, isLiked) {
+    if (isLiked) {
+      return this._request(`${this._url}/cards/${id}/likes`, {
+        method: 'DELETE',
+        headers: this._headers
+      })
+    } else {
+      return this._request(`${this._url}/cards/${id}/likes`, {
+        method: 'PUT',
+        headers: this._headers
+      })
+    }
   }
 
   setUserAvatar(newPhoto) {

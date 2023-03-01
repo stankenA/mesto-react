@@ -17,11 +17,17 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
 
+  const [cards, setCards] = useState([]);
+
   useEffect(() => {
     api.receiveUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
-      })
+      });
+    api.getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData)
+      });
   }, [])
 
   function handleEditAvatarClick() {
@@ -47,16 +53,26 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    api.changeLikeStatus(card._id, isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
+
   return (
     <div className="App">
       <UserContext.Provider value={currentUser}>
         <div className="page">
           <Header />
           <Main
+            cards={cards}
             handleAddPlaceClick={handleAddPlaceClick}
             handleEditAvatarClick={handleEditAvatarClick}
             handleEditProfileClick={handleEditProfileClick}
             handleCardClick={handleCardClick}
+            handleCardLike={handleCardLike}
           />
           <Footer />
           <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
