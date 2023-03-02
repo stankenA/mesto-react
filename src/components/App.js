@@ -3,10 +3,10 @@ import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import { api } from '../utilis/Api';
 import { UserContext } from '../contexts/CurrentUserContext';
 
@@ -87,6 +87,14 @@ function App() {
       })
   }
 
+  function handleAddPlace(data) {
+    api.postNewCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups();
+      })
+  }
+
   return (
     <div className="App">
       <UserContext.Provider value={currentUser}>
@@ -104,14 +112,7 @@ function App() {
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-          <PopupWithForm name="new-photo" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-            <input type="text" id="title-input" className="popup__input popup__input_type_photo-title" placeholder="Название"
-              name="photoTitle" required minLength="2" maxLength="30" autoComplete="off" />
-            <span className="popup__input-error title-input-error"></span>
-            <input type="url" id="href-input" className="popup__input popup__input_type_photo-href"
-              placeholder="Ссылка на картинку" name="photoHref" required autoComplete="off" />
-            <span className="popup__input-error href-input-error"></span>
-          </PopupWithForm>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlace} />
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>
       </UserContext.Provider>
