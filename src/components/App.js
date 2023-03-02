@@ -5,6 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import EditProfilePopup from './EditProfilePopup';
 import { api } from '../utilis/Api';
 import { UserContext } from '../contexts/CurrentUserContext';
 
@@ -69,6 +70,14 @@ function App() {
       })
   }
 
+  function handleUpdateUser(data) {
+    api.setNewProfileInfo(data)
+      .then((newUserInfo) => {
+        setCurrentUser(newUserInfo);
+        closeAllPopups();
+      })
+  }
+
   return (
     <div className="App">
       <UserContext.Provider value={currentUser}>
@@ -84,14 +93,7 @@ function App() {
             handleCardDelete={handleCardDelete}
           />
           <Footer />
-          <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-            <input type="text" id="name-input" className="popup__input popup__input_type_name" placeholder="Имя" name="name"
-              required minLength="2" maxLength="40" autoComplete="off" />
-            <span className="popup__input-error name-input-error"></span>
-            <input type="text" id="about-input" className="popup__input popup__input_type_description" placeholder="О себе"
-              name="about" required minLength="2" maxLength="200" autoComplete="off" />
-            <span className="popup__input-error about-input-error"></span>
-          </PopupWithForm>
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
           <PopupWithForm name="new-photo" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
             <input type="text" id="title-input" className="popup__input popup__input_type_photo-title" placeholder="Название"
               name="photoTitle" required minLength="2" maxLength="30" autoComplete="off" />
