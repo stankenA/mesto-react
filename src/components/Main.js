@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../contexts/CurrentUserContext.js';
-import { api } from '../utilis/Api.js';
 import Card from './Card.js';
 
 export default function Main({ cards, handleEditAvatarClick, handleEditProfileClick, handleAddPlaceClick, handleCardClick, handleCardLike, handleCardDelete }) {

@@ -25,11 +25,13 @@ function App() {
     api.receiveUserInfo()
       .then((userData) => {
         setCurrentUser(userData);
-      });
+      })
+      .catch(err => console.log(err));
     api.getInitialCards()
       .then((cardsData) => {
         setCards(cardsData)
-      });
+      })
+      .catch(err => console.log(err));
   }, [])
 
   function handleEditAvatarClick() {
@@ -61,7 +63,8 @@ function App() {
     api.changeLikeStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   function handleCardDelete(card) {
@@ -69,6 +72,7 @@ function App() {
       .then(() => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
+      .catch(err => console.log(err));
   }
 
   function handleUpdateUser(data) {
@@ -77,6 +81,7 @@ function App() {
         setCurrentUser(newUserInfo);
         closeAllPopups();
       })
+      .catch(err => console.log(err));
   }
 
   function handleUpdateAvatar(data) {
@@ -85,6 +90,7 @@ function App() {
         setCurrentUser(newAvatar);
         closeAllPopups();
       })
+      .catch(err => console.log(err));
   }
 
   function handleAddPlace(data) {
@@ -93,6 +99,7 @@ function App() {
         setCards([newCard, ...cards]);
         closeAllPopups();
       })
+      .catch(err => console.log(err));
   }
 
   return (
