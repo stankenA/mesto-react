@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import { api } from '../utilis/Api';
 import { UserContext } from '../contexts/CurrentUserContext';
 
@@ -78,6 +79,14 @@ function App() {
       })
   }
 
+  function handleUpdateAvatar(data) {
+    api.setUserAvatar(data.avatar)
+      .then((newAvatar) => {
+        setCurrentUser(newAvatar);
+        closeAllPopups();
+      })
+  }
+
   return (
     <div className="App">
       <UserContext.Provider value={currentUser}>
@@ -94,6 +103,7 @@ function App() {
           />
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
           <PopupWithForm name="new-photo" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
             <input type="text" id="title-input" className="popup__input popup__input_type_photo-title" placeholder="Название"
               name="photoTitle" required minLength="2" maxLength="30" autoComplete="off" />
@@ -101,11 +111,6 @@ function App() {
             <input type="url" id="href-input" className="popup__input popup__input_type_photo-href"
               placeholder="Ссылка на картинку" name="photoHref" required autoComplete="off" />
             <span className="popup__input-error href-input-error"></span>
-          </PopupWithForm>
-          <PopupWithForm name="new-avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-            <input type="url" id="avatar-href" className="popup__input popup__input_type_new-avatar"
-              placeholder="Ссылка на картинку" name="avatarHref" required autoComplete="off" />
-            <span className="popup__input-error avatar-href-error"></span>
           </PopupWithForm>
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         </div>
