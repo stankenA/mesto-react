@@ -21,6 +21,11 @@ function App() {
 
   const [cards, setCards] = useState([]);
 
+
+  // TODO: добавить слежение за состоянием отправки информации на сервер
+  // и в зависимости от него менять текст кнопки и её состояние
+  // const [submitState, setSubmitState] = useState({});
+
   useEffect(() => {
     api.receiveUserInfo()
       .then((userData) => {
