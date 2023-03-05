@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
 
   const currentUser = useContext(UserContext);
 
@@ -12,7 +12,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleNameChange(evt) {
     setName(evt.target.value);
@@ -33,7 +33,14 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   }
 
   return (
-    <PopupWithForm name="profile" title="Редактировать профиль" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} >
+    <PopupWithForm
+      name="profile"
+      title="Редактировать профиль"
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      submitButtonText={isLoading ? 'Сохранение...' : 'Сохранить'}
+    >
       <input type="text" id="name-input" className="popup__input popup__input_type_name" placeholder="Имя" name="name"
         required minLength="2" maxLength="40" autoComplete="off" value={name} onChange={handleNameChange} />
       <span className="popup__input-error name-input-error"></span>
