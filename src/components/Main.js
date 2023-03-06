@@ -6,6 +6,8 @@ export default function Main({ cards, handleEditAvatarClick, handleEditProfileCl
 
   const currentUser = useContext(UserContext);
 
+  // Из текущего контекста пользователя достаём необходимую информацию и вставляем на фронт
+
   return (
     <main className="content">
       <section className="profile">
@@ -21,8 +23,15 @@ export default function Main({ cards, handleEditAvatarClick, handleEditProfileCl
       </section>
       <section className="gallery">
         <ul className="gallery__grid">
-          {cards.map((card, i) => (
-            <Card card={card} key={card._id} onCardClick={handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete} />
+          {/* Рендерим массив карт */}
+          {cards.map((card) => (
+            <Card
+              card={card}
+              key={card._id}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+            />
           ))}
         </ul>
       </section>

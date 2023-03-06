@@ -12,23 +12,33 @@ import { UserContext } from '../contexts/CurrentUserContext';
 
 function App() {
 
+  // Стейты открытия/закрытия попапов
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
+  // Стейты индентификаторов загрузки
   const [isLoadingProfilePopup, setIsLoadingProfilePopup] = useState(false);
   const [isLoadingAvatarPopup, setIsLoadingAvatarPopup] = useState(false);
   const [isLoadingAddPlacePopup, setIsLoadingAddPlacePopup] = useState(false);
 
+  // Стейт о текущей выбранной карте (для попапа с полноразмерной фоткой)
   const [selectedCard, setSelectedCard] = useState({});
+
+  // Стейт об инфморации текущего пользователя
   const [currentUser, setCurrentUser] = useState({});
 
+  // Стейт массива карт
   const [cards, setCards] = useState([]);
 
 
   // TODO: добавить слежение за состоянием отправки информации на сервер
   // и в зависимости от него менять текст кнопки и её состояние
   // const [submitState, setSubmitState] = useState({});
+
+
+  // Получаем информацию о пользователе и массиве карт,
+  // записываем их значения в стейт-переменные
 
   useEffect(() => {
     api.receiveUserInfo()
@@ -43,6 +53,9 @@ function App() {
       .catch(err => console.log(err));
   }, [])
 
+
+  // Функции открытия попапов
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
   }
@@ -55,6 +68,8 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
+  // Функция закрытия всех попапов
+
   function closeAllPopups() {
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -62,11 +77,24 @@ function App() {
     setSelectedCard({});
   }
 
+  // Закрытие попапов на фон
+
+  function handleBgClose(evt) {
+    if (evt.target.classList.contains('popup_opened')) {
+      closeAllPopups();
+    }
+  }
+
+  // Функция обработки клика по изображению
+
   function handleCardClick(card) {
     setSelectedCard(card);
   }
 
+  // Функция обработки лайка
+
   function handleCardLike(card) {
+    // Проверяем, есть ли среди массива лайк пользователя
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     api.changeLikeStatus(card._id, isLiked)
@@ -75,6 +103,8 @@ function App() {
       })
       .catch(err => console.log(err));
   }
+
+  // Функция удаления карточки
 
   function handleCardDelete(card) {
     api.deleteCard(card._id)
@@ -145,24 +175,28 @@ function App() {
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
+            onBgClose={handleBgClose}
             onUpdateUser={handleUpdateUser}
             isLoading={isLoadingProfilePopup}
           />
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
+            onBgClose={handleBgClose}
             onUpdateAvatar={handleUpdateAvatar}
             isLoading={isLoadingAvatarPopup}
           />
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
+            onBgClose={handleBgClose}
             onAddPlace={handleAddPlace}
             isLoading={isLoadingAddPlacePopup}
           />
           <ImagePopup
             card={selectedCard}
             onClose={closeAllPopups}
+            onBgClose={handleBgClose}
           />
         </div>
       </UserContext.Provider>

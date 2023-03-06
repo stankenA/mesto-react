@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupWithForm';
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading, onBgClose }) {
 
   const currentUser = useContext(UserContext);
 
@@ -40,6 +40,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
       onClose={onClose}
       onSubmit={handleSubmit}
       submitButtonText={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onBgClose={onBgClose}
     >
       <input type="text" id="name-input" className="popup__input popup__input_type_name" placeholder="Имя" name="name"
         required minLength="2" maxLength="40" autoComplete="off" value={name} onChange={handleNameChange} />

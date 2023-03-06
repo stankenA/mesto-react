@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
-export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
+export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading, onBgClose }) {
 
   const nameRef = useRef();
   const linkRef = useRef();
@@ -28,6 +28,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }
       onClose={onClose}
       onSubmit={handleSubmit}
       submitButtonText={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onBgClose={onBgClose}
     >
       <input type="text" id="title-input" className="popup__input popup__input_type_photo-title" placeholder="Название"
         name="photoTitle" required minLength="2" maxLength="30" autoComplete="off" ref={nameRef} />

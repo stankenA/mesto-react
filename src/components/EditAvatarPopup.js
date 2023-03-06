@@ -3,15 +3,14 @@ import PopupWithForm from './PopupWithForm';
 import { UserContext } from '../contexts/CurrentUserContext';
 
 
-export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
+export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading, onBgClose }) {
 
   const currentUser = useContext(UserContext);
+  const avatarRef = useRef();
 
   useEffect(() => {
     avatarRef.current.value = '';
   }, [isOpen]);
-
-  const avatarRef = useRef();
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -29,6 +28,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
       onClose={onClose}
       onSubmit={handleSubmit}
       submitButtonText={isLoading ? 'Сохранение...' : 'Сохранить'}
+      onBgClose={onBgClose}
     >
       <input type="url" id="avatar-href" className="popup__input popup__input_type_new-avatar"
         placeholder="Ссылка на картинку" name="avatarHref" required autoComplete="off" ref={avatarRef} />

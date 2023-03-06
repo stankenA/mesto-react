@@ -36,6 +36,7 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           <button type="button" className={cardLikeButtonClassName} aria-label="Кнопка лайка" onClick={handleLike}></button>
           <span className="gallery__like-counter">{card.likes.length}</span>
         </div>
+        {/* Оставляем кнопку удаления только у своих карт */}
         {isOwn && <button className="gallery__delete-button" onClick={handleDelete}></button>}
       </div>
     </li>
