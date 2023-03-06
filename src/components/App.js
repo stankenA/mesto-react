@@ -31,12 +31,6 @@ function App() {
   // Стейт массива карт
   const [cards, setCards] = useState([]);
 
-
-  // TODO: добавить слежение за состоянием отправки информации на сервер
-  // и в зависимости от него менять текст кнопки и её состояние
-  // const [submitState, setSubmitState] = useState({});
-
-
   // Получаем информацию о пользователе и массиве карт,
   // записываем их значения в стейт-переменные
 
@@ -84,6 +78,24 @@ function App() {
       closeAllPopups();
     }
   }
+
+  // Закрытие попапов на Esc
+
+  function handleEscClose(evt) {
+    if (evt.key === 'Escape') {
+      closeAllPopups();
+      console.log('boop')
+    }
+  }
+
+  useEffect(() => {
+    if (isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen) {
+      document.addEventListener('keydown', handleEscClose)
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscClose)
+    }
+  }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isAddPlacePopupOpen])
 
   // Функция обработки клика по изображению
 

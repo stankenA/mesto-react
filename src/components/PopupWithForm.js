@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function PopupWithForm({ name, title, isOpen, onClose, children, onSubmit, submitButtonText, onBgClose }) {
   return (
-    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`} onClick={onBgClose}>
+    <div className={`popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`} onMouseDown={onBgClose}>
       <div className="popup__container">
         <h3 className="popup__header">{title}</h3>
         <form name={`${name}`} className="popup__form" noValidate onSubmit={onSubmit}>
