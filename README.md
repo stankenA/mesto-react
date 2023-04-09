@@ -31,4 +31,5 @@
 **Демо**: https://stankena.github.io/mesto-react/
 
 **Версия на ванильном JS** https://github.com/stankenA/mesto
+
 **Расширенная версия на React с авторизацией и регистрацией**: https://github.com/stankenA/react-mesto-auth
